@@ -231,135 +231,157 @@ python cli.py --help
 
 > 主入口文件是 `cli.py`（交互模式）或 `run_agent.py`（单次运行）。
 
-### 4.5 快速 API 测试
+### 4.5 📝 AI Use & Verification Log（作业要求的"Prompt Log"）
 
-创建 `test_deepseek.py`：
+在 hermes-agent 环境中调用内部 DeepSeek API 的验证记录如下。
 
+**验证脚本：** `test_deepseek_direct.py`
 ```python
-import openai
+"""直接调用 DeepSeek API 的测试脚本"""
+from openai import OpenAI
 
-client = openai.OpenAI(
-    api_key="YOUR_DEEPSEEK_API_KEY",  # 替换
-    base_url="https://api.deepseek.com/v1"
+client = OpenAI(
+    api_key="sys-nvYJpqmzMP8szez6hmJpkSTkZfNesQQ7JwhoYjMm2ychKp5Y2Lc4FW12hG3Zuw4x",
+    base_url="http://10.22.18.12:9901/v1"
 )
 
 response = client.chat.completions.create(
-    model="deepseek-chat",
-    messages=[{"role": "user", "content": "Hello, DeepSeek!"}]
+    model="deepseek-v4-flash",
+    messages=[{"role": "user", "content": "你好，用中文说一句话"}]
 )
 
+print("结果：")
 print(response.choices[0].message.content)
 ```
 
-运行：
-
-```batch
-python test_deepseek.py
+**测试结果：**
 ```
+结果：
+你好！这是一句用中文传达的问候，希望能带给你温暖与好心情。
+```
+✅ API 连接成功，hermes-agent 可通过内部代理调用 DeepSeek 模型。
 
 ---
 
-## 5. 任务 5：EasyMultiProfiler 与 Web 版安装
+## 5. 任务 5：EasyMultiProfiler-Web v9.0.4 安装
 
-> ⚠️ **注意：** 原提供的仓库 `luibingdong/EasyMultiProfiler` 已不存在。
-> 实际仓库在用户 `xielab2017` 下。推荐安装最新版 **EasyMultiProfiler-V3**。
+### 5.1 仓库信息
 
-### 5.1 前提条件
+| 项目 | 地址 |
+|------|------|
+| **EasyMultiProfiler-Web** | `https://github.com/xielab2017/EasyMultiProfiler-Web` |
+| **EasyMultiProfiler R 包** | EasyMultiProfiler-Web 仓库内置（DESCRIPTION 声明） |
 
-| 项目 | 所需环境 |
-|------|----------|
-| **EasyMultiProfiler-V3** | Python 3.8+ / R（取决于项目语言） |
-| **EasyMultiProfiler-Web** | Python 3.8+（需 Flask 等 Web 框架） |
-| **Git** | 必须（用于克隆仓库） |
-
-### 5.2 克隆 EasyMultiProfiler-V3 和 Web 版
+### 5.2 克隆仓库
 
 ```batch
-cd C:\
-git clone https://github.com/xielab2017/EasyMultiProfiler-V3.git
-git clone https://github.com/xielab2017/EasyMultiProfiler-Web.git
+cd C:\Users\admin
+git clone -b main https://github.com/xielab2017/EasyMultiProfiler-Web.git
+cd EasyMultiProfiler-Web
 ```
 
-### 5.3 安装 EasyMultiProfiler-V3
+### 5.3 安装过程与问题修复
 
-EasyMultiProfiler-V3 是一个 **R 包 + Python Web 后端** 项目。
+EMP-Web 采用 **R Plumber 后端 + Python 静态前端** 架构（非 Flask）。安装需满足以下前提：
 
-**安装 Web 后端依赖（Python）：**
-```batch
-cd C:\EasyMultiProfiler-V3\web\backend
-pip install flask flask-cors pandas numpy openpyxl xlrd werkzeug
+| 前提条件 | 状态 |
+|----------|:----:|
+| Git | ✅ 已安装 |
+| Python 3.8+ | ✅ Python 3.12.10 |
+| R >= 4.3.3 | ✅ R 4.6.1（`C:\Program Files\R\R-4.6.1\`） |
+| R 包：KEGGREST / DOSE / enrichplot / EasyMultiProfiler | ✅ 已全部安装 |
+
+#### 问题：SSL 连接错误导致 R 包下载失败
+
+运行 `install.cmd` 后，安装脚本 `install_runtime.R` 调用 `BiocManager::install()` 时出现：
+```
+URL 'https://bioconductor.org/...': status was 'SSL connect error'
 ```
 
-> ⚠️ **注意：** 如果遇到 `pandas==2.1.4` 编译错误（缺少 C 编译器），不要指定版本号，直接安装最新预编译版（如上命令）。
-> `requirements.txt` 中的旧版本号可能不兼容 Python 3.14，用最新版即可正常工作。
+**原因：** R 默认使用 `libcurl` 下载方法，但在该 Windows 环境中 SSL 握手失败。Windows 自带的 `wininet` 方法可正常工作。
 
-**安装 R 包（在 R 控制台中运行）：**
+**解决方法：** 设置 R 的下载方法为 `wininet`
 ```r
-install.packages("devtools")
-library(devtools)
-install_github("xielab2017/EasyMultiProfiler-V3", subdir = "r-package")
+options(download.file.method = "wininet")
 ```
 
-**启动 Web 服务：**
-```batch
-cd C:\EasyMultiProfiler-V3\web\backend
-python app.py
-```
+#### 修复步骤
 
-浏览器访问：**http://localhost:5000**（具体端口见 app.py 或 README）
-
-**构建前端界面（可选，建议完成以展示完整功能）：**
-```batch
-cd C:\EasyMultiProfiler-V3\web\frontend
-npm install
-npm run build
-xcopy /E /I build ..\backend\static
-```
-构建完成后刷新 `http://localhost:5000` 即可看到完整 Web 界面。
-
-### 5.5 ✅ 安装验证结果
-
-后端 API 服务运行成功，访问 `http://localhost:5000` 返回：
-```json
-{
-  "api_endpoints": ["/api/health","/api/modules","/api/upload","/api/analyze"],
-  "message": "EasyMultiProfiler API 服务运行中",
-  "status": "ok"
+1. **修改 `install_runtime.R`**，在 Windows 平台下自动启用 wininet：
+```r
+if (.Platform$OS.type == "windows") {
+  options(download.file.method = "wininet")
 }
 ```
 
+2. **手动安装缺失的依赖包**（按顺序，使用 wininet 方法）：
+
+| 包名 | 类型 | 备注 |
+|------|------|------|
+| `KEGGREST` | Bioconductor | KEGG 数据库 API 接口，DOSE 的依赖 |
+| `GO.db` | Bioconductor | Gene Ontology 注释数据库 |
+| `org.Hs.eg.db` | Bioconductor | 人类基因组注释 |
+| `DOSE` | Bioconductor | Disease Ontology 富集分析 |
+| `enrichplot` | Bioconductor | 富集分析可视化 |
+| `EasyMultiProfiler` | 本地安装 | 多组学分析核心 R 包 |
+
+安装命令示例（R 中执行）：
+```r
+options(download.file.method = "wininet")
+BiocManager::install("KEGGREST", ask = FALSE, update = FALSE)
+BiocManager::install("DOSE", ask = FALSE, update = FALSE)
+BiocManager::install("enrichplot", ask = FALSE, update = FALSE)
+remotes::install_local("C:/Users/admin/EasyMultiProfiler-Web", upgrade = "never", force = TRUE)
+```
+
+### 5.4 启动服务
+
+所有 R 包安装完成后，通过 `start_local_windows.ps1` 启动：
+
+```batch
+powershell -ExecutionPolicy Bypass -Command "& 'C:\Users\admin\EasyMultiProfiler-Web\webapp\scripts\start_local_windows.ps1' -NoBrowser"
+```
+
+### 5.5 ✅ 安装验证结果
+
+**API 健康检查：**
+```
+GET http://127.0.0.1:8000/api/health
+→ {"status":"ok","version":"9.0.4"}
+```
+
+**Web 前端：**
+```
+GET http://127.0.0.1:8080/
+→ HTTP 200
+```
+
+**R 包版本验证：**
+```
+R version 4.6.1 (2026-06-24 ucrt)
+Total packages: 475
+EasyMultiProfiler: 9.0.4
+clusterProfiler: 4.20.0
+DOSE: 4.6.0
+enrichplot: 1.32.0
+KEGGREST: 1.52.2
+ggplot2: 4.0.3
+dplyr: 1.2.1
+tidyverse: 2.0.0
+```
+
+**验证汇总表：**
+
 | 验证项 | 状态 | 说明 |
 |--------|:----:|------|
-| Flask 后端启动 | ✅ 通过 | 监听 0.0.0.0:5000 |
-| API 健康检查 `/api/health` | ✅ 通过 | 返回 `status: ok` |
-| API 端点列表 | ✅ 通过 | upload / analyze / modules / health 均可用 |
-| Web 前端（构建后） | ✅ 通过 | React + Ant Design 界面访问 `localhost:5000` |
-
-### 5.4 安装并启动 EasyMultiProfiler-Web
-
-```batch
-cd C:\EasyMultiProfiler-Web
-python -m venv venv
-venv\Scripts\activate
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-如果无 `requirements.txt`（常见 Flask 依赖）：
-```batch
-pip install flask flask-cors pandas numpy
-```
-
-启动 Web 服务：
-```batch
-cd C:\EasyMultiProfiler-Web
-venv\Scripts\activate
-python app.py
-```
-
-浏览器访问：**http://127.0.0.1:5000**
-
-> ⚠️ 具体端口和启动命令请参照各仓库的 `README.md`。
+| R 4.6.1 | ✅ 通过 | C:\Program Files\R\R-4.6.1\ |
+| API 服务（端口 8000） | ✅ 通过 | Plumber R 后端，`/api/health` 返回 ok |
+| Web 前端（端口 8080） | ✅ 通过 | Python 静态服务器，HTTP 200 |
+| KEGGREST | ✅ 通过 | 1.52.2（DOSE 依赖） |
+| DOSE | ✅ 通过 | 4.6.0（enrichplot 依赖） |
+| enrichplot | ✅ 通过 | 1.32.0 |
+| EasyMultiProfiler | ✅ 通过 | 9.0.4 |
+| GitHub 导出绑定 | ✅ 通过 | 学号 SUAT24000107，仓库 zhf23579-code/Bioinformatics_homewor_Zihan-Fang |
 
 ---
 
