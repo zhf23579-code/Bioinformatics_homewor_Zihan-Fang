@@ -1,0 +1,162 @@
+{
+  "success": true,
+  "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+  "events": [
+    {
+      "event_type": "api_call",
+      "path": "/llm/openrouter_verified",
+      "method": "GET",
+      "total_ms": 108,
+      "backend_ms": 30.9,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-08-31T22:04:05.700+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/clinical/vars_standalone/h6UktKSXXpKzmOc68d73KJN9",
+      "method": "GET",
+      "total_ms": 265,
+      "backend_ms": 156.5,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-08-31T22:04:07.619+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/clinical/vars_standalone/h6UktKSXXpKzmOc68d73KJN9",
+      "method": "GET",
+      "total_ms": 89,
+      "backend_ms": 4.7,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-08-31T22:27:10.147+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/clinical/vars_standalone/h6UktKSXXpKzmOc68d73KJN9",
+      "method": "GET",
+      "total_ms": 77,
+      "backend_ms": 5.2,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-08-31T22:27:12.028+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/llm/openrouter_verified",
+      "method": "GET",
+      "total_ms": 1335,
+      "backend_ms": 31.1,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-08-31T22:32:36.281+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/clinical/vars_standalone/h6UktKSXXpKzmOc68d73KJN9",
+      "method": "GET",
+      "total_ms": 231,
+      "backend_ms": 137.5,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-08-31T22:32:37.001+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/llm/openrouter_verified",
+      "method": "GET",
+      "total_ms": 945,
+      "backend_ms": 55.4,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-09-02T10:11:45.822+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/clinical/vars_standalone/h6UktKSXXpKzmOc68d73KJN9",
+      "method": "GET",
+      "total_ms": 305,
+      "backend_ms": 193.3,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-09-02T10:11:46.802+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/llm/openrouter_verified",
+      "method": "GET",
+      "total_ms": 874,
+      "backend_ms": 45.5,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-09-02T16:03:04.535+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/clinical/vars_standalone/h6UktKSXXpKzmOc68d73KJN9",
+      "method": "GET",
+      "total_ms": 233,
+      "backend_ms": 143.2,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-09-02T16:03:05.357+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/llm/openrouter_verified",
+      "method": "GET",
+      "total_ms": 924,
+      "backend_ms": 35.2,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-09-06T14:26:15.162+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/clinical/vars_standalone/h6UktKSXXpKzmOc68d73KJN9",
+      "method": "GET",
+      "total_ms": 213,
+      "backend_ms": 140.3,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-09-06T14:26:15.829+0800"
+    },
+    {
+      "event_type": "api_call",
+      "path": "/clinical/vars_standalone/h6UktKSXXpKzmOc68d73KJN9",
+      "method": "GET",
+      "total_ms": 76,
+      "backend_ms": 5.1,
+      "case_id": null,
+      "experiment": null,
+      "user_id": "h6UktKSXXpKzmOc68d73KJN9",
+      "role": "local",
+      "ts": "2026-09-06T14:26:55.939+0800"
+    }
+  ]
+}
