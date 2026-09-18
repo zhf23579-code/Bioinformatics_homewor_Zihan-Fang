@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 780" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <style>
+      .title { font-size: 16px; font-weight: bold; fill: #1a1a2e; }
+      .label { font-size: 11px; fill: #333; }
+      .small { font-size: 9px; fill: #555; }
+      .box-start { fill: #e8f4f8; stroke: #2980b9; stroke-width: 2; rx: 8; }
+      .box-filter { fill: #fef9e7; stroke: #f39c12; stroke-width: 2; rx: 8; }
+      .box-exclude { fill: #fdedec; stroke: #e74c3c; stroke-width: 2; rx: 8; }
+      .box-rank { fill: #eafaf1; stroke: #27ae60; stroke-width: 2; rx: 8; }
+      .box-result { fill: #f4ecf7; stroke: #8e44ad; stroke-width: 2; rx: 8; }
+      .box-verify { fill: #fdf2e9; stroke: #e67e22; stroke-width: 2; rx: 8; }
+      .line { stroke: #333; stroke-width: 1.5; fill: none; }
+      .dash { stroke: #666; stroke-width: 1; stroke-dasharray: 5,3; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="550" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Q4 - 变异优先排序工作流</text>
+
+  <!-- Start -->
+  <rect class="box-start" x="300" y="50" width="500" height="40"/>
+  <text x="550" y="75" text-anchor="middle" class="title">输入：variants_q4.tsv（12个合成变异）</text>
+
+  <line class="line" x1="550" y1="90" x2="550" y2="110" marker-end="url(#arrow)"/>
+
+  <!-- Hard Filter 1: Technical Quality -->
+  <rect class="box-filter" x="50" y="115" width="500" height="55"/>
+  <text x="300" y="137" text-anchor="middle" class="title">硬过滤1：技术质量过滤</text>
+  <text x="300" y="155" text-anchor="middle" class="small">FILTER == "PASS" · DP ≥ 30 · GQ ≥ 50</text>
+
+  <rect class="box-exclude" x="650" y="115" width="400" height="55"/>
+  <text x="850" y="135" text-anchor="middle" class="title">排除的变异：</text>
+  <text x="850" y="153" text-anchor="middle" class="small">chr2 MSH2 (LowQual, DP=8, GQ=12)</text>
+  <text x="850" y="165" text-anchor="middle" class="small">chr6 HLA-A (FAIL, GQ=40)</text>
+  <text x="850" y="177" text-anchor="middle" class="small">chrX MECP2 (DP=5, GQ=20)</text>
+
+  <line class="line" x1="550" y1="115" x2="500" y2="142"/>
+  <line class="line" x1="550" y1="115" x2="650" y2="142"/>
+
+  <line class="line" x1="300" y1="170" x2="300" y2="195" marker-end="url(#arrow)"/>
+
+  <!-- Hard Filter 2: AF -->
+  <rect class="box-filter" x="50" y="200" width="500" height="45"/>
+  <text x="300" y="220" text-anchor="middle" class="title">硬过滤2：人群频率过滤</text>
+  <text x="300" y="238" text-anchor="middle" class="small">AF ≤ 0.001（罕见变异阈值）</text>
+
+  <rect class="box-exclude" x="650" y="200" width="400" height="45"/>
+  <text x="850" y="218" text-anchor="middle" class="title">排除的变异：</text>
+  <text x="850" y="236" text-anchor="middle" class="small">chr1 F5 (AF=0.42), chr11 ATM (AF=0.18), chr4 intron (AF=0.35)</text>
+
+  <line class="line" x1="550" y1="200" x2="500" y2="222"/>
+  <line class="line" x1="550" y1="200" x2="650" y2="222"/>
+
+  <line class="line" x1="300" y1="245" x2="300" y2="270" marker-end="url(#arrow)"/>
+
+  <!-- Hard Filter 3: Consequence -->
+  <rect class="box-filter" x="50" y="275" width="500" height="45"/>
+  <text x="300" y="295" text-anchor="middle" class="title">硬过滤3：功能后果过滤</text>
+  <text x="300" y="313" text-anchor="middle" class="small">保留：missense | stop_gained | frameshift | splice</text>
+
+  <rect class="box-exclude" x="650" y="275" width="400" height="45"/>
+  <text x="850" y="293" text-anchor="middle" class="title">排除的变异：</text>
+  <text x="850" y="311" text-anchor="middle" class="small">chr7 CFTR (synonymous) · chr8 (intergenic) · chr4 (intron)</text>
+
+  <line class="line" x1="550" y1="275" x2="500" y2="297"/>
+  <line class="line" x1="550" y1="275" x2="650" y2="297"/>
+
+  <line class="line" x1="300" y1="320" x2="300" y2="345" marker-end="url(#arrow)"/>
+
+  <!-- Remaining variants -->
+  <rect class="box-rank" x="200" y="350" width="700" height="50"/>
+  <text x="550" y="370" text-anchor="middle" class="title">硬过滤后保留的变异（满足所有技术、频率、后果条件）：</text>
+  <text x="550" y="388" text-anchor="middle" class="small">① chr17:7673803 TP53 splice_acceptor ② chr13:32316461 BRCA2 missense ③ chr12:25398284 KRAS missense</text>
+
+  <line class="line" x1="550" y1="400" x2="550" y2="425" marker-end="url(#arrow)"/>
+
+  <!-- Prioritization -->
+  <rect class="box-result" x="50" y="430" width="1000" height="95"/>
+  <text x="550" y="452" text-anchor="middle" class="title">优先级排序（ClinVar + 基因生物学意义 + 功能后果严重程度）</text>
+  
+  <text x="200" y="480" text-anchor="middle" class="title" fill="#c0392b">第1优先级：TP53 splice_acceptor</text>
+  <text x="200" y="498" text-anchor="middle" class="small">ClinVar: Pathogenic · AF=0.00001 · DP=80 · GQ=99 · 剪接供体位点变异</text>
+  
+  <text x="650" y="480" text-anchor="middle" class="title" fill="#e67e22">第2优先级：KRAS missense</text>
+  <text x="650" y="498" text-anchor="middle" class="small">ClinVar: CIP · AF=0.00015 · 癌症驱动基因</text>
+  
+  <text x="400" y="515" text-anchor="middle" class="title" fill="#7f8c8d">第3优先级：BRCA2 missense</text>
+  <text x="400" y="525" text-anchor="middle" class="small">ClinVar: Uncertain_significance</text>
+
+  <line class="line" x1="550" y1="525" x2="550" y2="550" marker-end="url(#arrow)"/>
+
+  <!-- False lead critique -->
+  <rect class="box-verify" x="100" y="555" width="900" height="75"/>
+  <text x="550" y="575" text-anchor="middle" class="title">假阳性批判与验证</text>
+  <text x="550" y="595" text-anchor="middle" class="small">为什么TP53变异可能是假阳性？→ 合成数据陷阱 · 单一样本无法验证剪接效应</text>
+  <text x="550" y="612" text-anchor="middle" class="small">验证：ClinVar数据库 · Ensembl注释 · 文献检索 · RNA-seq确认剪接异常</text>
+
+  <line class="line" x1="550" y1="630" x2="550" y2="655" marker-end="url(#arrow)"/>
+
+  <!-- Final conclusion -->
+  <rect class="box-rank" x="200" y="660" width="700" height="55"/>
+  <text x="550" y="682" text-anchor="middle" class="title">结论与建议</text>
+  <text x="550" y="700" text-anchor="middle" class="small">TP53 splice_acceptor变异为优先级最高候选 | 建议Sanger测序验证 + RNA分析</text>
+
+  <!-- Legend -->
+  <rect x="30" y="650" width="150" height="100" fill="#f8f9fa" stroke="#ccc" rx="5"/>
+  <text x="45" y="668" font-size="11" font-weight="bold" fill="#333">图例</text>
+  <rect x="45" y="675" width="16" height="10" fill="#fef9e7" stroke="#f39c12" stroke-width="1"/>
+  <text x="70" y="684" font-size="9" fill="#333">过滤步骤</text>
+  <rect x="45" y="690" width="16" height="10" fill="#fdedec" stroke="#e74c3c" stroke-width="1"/>
+  <text x="70" y="699" font-size="9" fill="#333">排除</text>
+  <rect x="45" y="705" width="16" height="10" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1"/>
+  <text x="70" y="714" font-size="9" fill="#333">优先级排序</text>
+  <rect x="45" y="720" width="16" height="10" fill="#fdf2e9" stroke="#e67e22" stroke-width="1"/>
+  <text x="70" y="729" font-size="9" fill="#333">验证</text>
+</svg>

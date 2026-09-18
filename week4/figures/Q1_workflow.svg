@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <style>
+      .title { font-size: 16px; font-weight: bold; fill: #1a1a2e; }
+      .label { font-size: 11px; fill: #333; }
+      .small { font-size: 9px; fill: #555; }
+      .box-q { fill: #e8f4f8; stroke: #2980b9; stroke-width: 2; rx: 8; }
+      .box-assay { fill: #fef9e7; stroke: #f39c12; stroke-width: 2; rx: 8; }
+      .box-decision { fill: #fdedec; stroke: #e74c3c; stroke-width: 2; rx: 10; }
+      .box-validation { fill: #eafaf1; stroke: #27ae60; stroke-width: 2; rx: 8; }
+      .box-conclusion { fill: #f4ecf7; stroke: #8e44ad; stroke-width: 2; rx: 8; }
+      .line { stroke: #333; stroke-width: 1.5; fill: none; }
+      .dash { stroke: #666; stroke-width: 1; stroke-dasharray: 5,3; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="550" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Q1 - 实验策略工作流：确定基因X上调的分子机制</text>
+
+  <!-- 1. Biological Question -->
+  <rect class="box-q" x="350" y="50" width="400" height="55"/>
+  <text x="550" y="72" text-anchor="middle" class="title">生物学问题</text>
+  <text x="550" y="90" text-anchor="middle" class="small">基因X在疾病组中显著上调</text>
+
+  <!-- Arrow down -->
+  <line class="line" x1="550" y1="105" x2="550" y2="135"/>
+  <line class="line" x1="550" y1="135" x2="550" y2="140" marker-end="url(#arrow)"/>
+
+  <!-- 2. First Level Strategy - RNA-seq first -->
+  <rect class="box-assay" x="125" y="145" width="300" height="55"/>
+  <text x="275" y="167" text-anchor="middle" class="title">第1步：RNA-seq（确认差异表达）</text>
+  <text x="275" y="185" text-anchor="middle" class="small">测量：基因X转录本表达水平</text>
+
+  <rect class="box-decision" x="625" y="145" width="330" height="55"/>
+  <text x="790" y="163" text-anchor="middle" class="title">决策节点：上调机制是什么？</text>
+  <text x="790" y="183" text-anchor="middle" class="small">RNA-seq验证后，根据可能机制选择下一检测方法</text>
+
+  <line class="line" x1="550" y1="140" x2="275" y2="145" marker-end="url(#arrow)"/>
+  <line class="line" x1="550" y1="140" x2="790" y2="145" marker-end="url(#arrow)"/>
+
+  <!-- Branch lines after RNA-seq -->
+  <line class="line" x1="275" y1="200" x2="275" y2="220" marker-end="url(#arrow)"/>
+  <line class="line" x1="790" y1="200" x2="790" y2="220" marker-end="url(#arrow)"/>
+
+  <!-- 3. Parallel Strategy Branches -->
+  <!-- Branch 1: cis-regulatory variant -->
+  <rect class="box-assay" x="35" y="230" width="230" height="65"/>
+  <text x="150" y="252" text-anchor="middle" class="title">假设A：调控变异</text>
+  <text x="150" y="270" text-anchor="middle" class="small">WGS/WES</text>
+  <text x="150" y="284" text-anchor="middle" class="small">检测启动子/增强子/剪接位点变异</text>
+
+  <!-- Branch 2: chromatin accessibility -->
+  <rect class="box-assay" x="290" y="230" width="230" height="65"/>
+  <text x="405" y="252" text-anchor="middle" class="title">假设B：染色质可及性</text>
+  <text x="405" y="270" text-anchor="middle" class="small">ATAC-seq</text>
+  <text x="405" y="284" text-anchor="middle" class="small">检测开放染色质区域变化</text>
+
+  <!-- Branch 3: histone / TF -->
+  <rect class="box-assay" x="545" y="230" width="230" height="65"/>
+  <text x="660" y="252" text-anchor="middle" class="title">假设C：组蛋白/TF修饰</text>
+  <text x="660" y="270" text-anchor="middle" class="small">ChIP-seq / CUT&Tag</text>
+  <text x="660" y="284" text-anchor="middle" class="small">H3K27ac/H3K4me3/TF结合图谱</text>
+
+  <!-- Branch 4: DNA methylation -->
+  <rect class="box-assay" x="800" y="230" width="240" height="65"/>
+  <text x="920" y="252" text-anchor="middle" class="title">假设D：DNA甲基化</text>
+  <text x="920" y="270" text-anchor="middle" class="small">WGBS / EM-seq</text>
+  <text x="920" y="284" text-anchor="middle" class="small">检测启动子/CpG岛甲基化变化</text>
+
+  <!-- Down arrows from branches -->
+  <line class="line" x1="150" y1="295" x2="150" y2="325" marker-end="url(#arrow)"/>
+  <line class="line" x1="405" y1="295" x2="405" y2="325" marker-end="url(#arrow)"/>
+  <line class="line" x1="660" y1="295" x2="660" y2="325" marker-end="url(#arrow)"/>
+  <line class="line" x1="920" y1="295" x2="920" y2="325" marker-end="url(#arrow)"/>
+
+  <!-- 3D contact branch (parallel) -->
+  <rect class="box-assay" x="380" y="340" width="310" height="50"/>
+  <text x="535" y="362" text-anchor="middle" class="title">假设E：增强子-启动子接触改变</text>
+  <text x="535" y="378" text-anchor="middle" class="small">Hi-C / Micro-C（3D基因组构象）</text>
+
+  <line class="line" x1="405" y1="325" x2="405" y2="340" marker-end="url(#arrow)"/>
+  <line class="line" x1="660" y1="325" x2="660" y2="340" marker-end="url(#arrow)"/>
+  <line class="line" x1="150" y1="325" x2="380" y2="365"/>
+  <line class="line" x1="920" y1="325" x2="690" y2="365"/>
+
+  <!-- Integration & Prioritization -->
+  <line class="line" x1="535" y1="390" x2="535" y2="410" marker-end="url(#arrow)"/>
+
+  <rect class="box-decision" x="280" y="415" width="510" height="50"/>
+  <text x="535" y="437" text-anchor="middle" class="title">整合分析：集成多组学证据确定最可能机制</text>
+  <text x="535" y="452" text-anchor="middle" class="small">综合变异、可及性、组蛋白修饰、甲基化、3D接触数据</text>
+
+  <line class="line" x1="535" y1="465" x2="535" y2="490" marker-end="url(#arrow)"/>
+
+  <!-- Functional Validation -->
+  <rect class="box-validation" x="280" y="495" width="510" height="50"/>
+  <text x="535" y="517" text-anchor="middle" class="title">功能验证（区分相关性与因果关系）</text>
+  <text x="535" y="532" text-anchor="middle" class="small">MPRA / CRISPR干扰 / 增强子删除 / 环锚扰动</text>
+
+  <line class="line" x1="535" y1="545" x2="535" y2="570" marker-end="url(#arrow)"/>
+
+  <!-- Conclusion -->
+  <rect class="box-conclusion" x="330" y="575" width="410" height="45"/>
+  <text x="535" y="597" text-anchor="middle" class="title">结论：确定基因X上调的分子机制</text>
+  <text x="535" y="612" text-anchor="middle" class="small">最终科学假说与下一步实验设计</text>
+
+  <!-- Legend -->
+  <rect x="700" y="640" width="330" height="110" fill="#f8f9fa" stroke="#ccc" rx="5"/>
+  <text x="720" y="660" font-size="12" font-weight="bold" fill="#333">图例</text>
+  <rect x="720" y="670" width="20" height="12" fill="#e8f4f8" stroke="#2980b9" stroke-width="1"/>
+  <text x="750" y="681" font-size="10" fill="#333">生物学问题</text>
+  <rect x="720" y="687" width="20" height="12" fill="#fef9e7" stroke="#f39c12" stroke-width="1"/>
+  <text x="750" y="698" font-size="10" fill="#333">检测方法 / 假设分支</text>
+  <rect x="720" y="704" width="20" height="12" fill="#fdedec" stroke="#e74c3c" stroke-width="1"/>
+  <text x="750" y="715" font-size="10" fill="#333">决策 / 整合节点</text>
+  <rect x="720" y="721" width="20" height="12" fill="#eafaf1" stroke="#27ae60" stroke-width="1"/>
+  <text x="750" y="732" font-size="10" fill="#333">功能验证实验</text>
+  <rect x="720" y="738" width="20" height="12" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1"/>
+  <text x="750" y="749" font-size="10" fill="#333">最终结论</text>
+</svg>

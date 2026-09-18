@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2980b9"/>
+    </marker>
+    <style>
+      .title { font-size: 16px; font-weight: bold; fill: #1a1a2e; }
+      .label { font-size: 11px; fill: #333; }
+      .small { font-size: 9px; fill: #555; }
+      .step { fill: #e8f4f8; stroke: #2980b9; stroke-width: 2; rx: 8; }
+      .qc { fill: #fef9e7; stroke: #f39c12; stroke-width: 2; rx: 8; }
+      .align { fill: #eafaf1; stroke: #27ae60; stroke-width: 2; rx: 8; }
+      .process { fill: #fdedec; stroke: #e74c3c; stroke-width: 2; rx: 8; }
+      .downstream { fill: #f4ecf7; stroke: #8e44ad; stroke-width: 2; rx: 8; }
+      .annot { fill: #e8f8f5; stroke: #1abc9c; stroke-width: 2; rx: 8; }
+      .output { fill: #fdf2e9; stroke: #e67e22; stroke-width: 1.5; rx: 5; }
+      .line { stroke: #333; stroke-width: 1.5; fill: none; }
+      .dash { stroke: #666; stroke-width: 1; stroke-dasharray: 5,3; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="600" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Q2 - 从FASTQ到可信分析工作流程图（以WGS为例）</text>
+
+  <!-- Step 1: Raw Data -->
+  <rect class="step" x="380" y="50" width="440" height="45"/>
+  <text x="600" y="72" text-anchor="middle" class="title">原始数据：Paired-End Illumina FASTQ文件</text>
+  <text x="600" y="86" text-anchor="middle" class="small">S01-S08 | R1/R2 | WGS / RNA-seq / ATAC-seq / ChIP-seq</text>
+
+  <line class="line" x1="600" y1="95" x2="600" y2="120" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: FASTQ QC -->
+  <rect class="qc" x="380" y="125" width="440" height="65"/>
+  <text x="600" y="147" text-anchor="middle" class="title">步骤1：FASTQ质量控制</text>
+  <text x="600" y="163" text-anchor="middle" class="label">FastQC + MultiQC · 质量评估 · GC含量 · 适配器 · 重复率</text>
+  <text x="600" y="178" text-anchor="middle" class="small">输出：QC报告，判断是否需处理</text>
+
+  <line class="line" x1="600" y1="190" x2="600" y2="210" marker-end="url(#arrow)"/>
+
+  <!-- QC Decision -->
+  <rect class="process" x="380" y="215" width="440" height="40"/>
+  <text x="600" y="234" text-anchor="middle" class="title">QC决策：通过？</text>
+  <text x="600" y="248" text-anchor="middle" class="small">WARN/FAIL的指标需要处理</text>
+
+  <!-- QC processing branch -->
+  <line class="line" x1="380" y1="235" x2="300" y2="235"/>
+  <line class="line" x1="300" y1="235" x2="300" y2="280"/>
+  <line class="line" x1="600" y1="255" x2="600" y2="280" marker-end="url(#arrow)"/>
+
+  <rect class="qc" x="130" y="280" width="340" height="55"/>
+  <text x="300" y="300" text-anchor="middle" class="title">QC处理：</text>
+  <text x="300" y="316" text-anchor="middle" class="small">Cutadapt/Trimmomatic · 适配器修剪</text>
+  <text x="300" y="328" text-anchor="middle" class="small">碱基质量修剪 · 读长过滤</text>
+
+  <rect class="output" x="610" y="280" width="300" height="55"/>
+  <text x="760" y="300" text-anchor="middle" class="title">处理后的干净FASTQ文件</text>
+  <text x="760" y="316" text-anchor="middle" class="small">重新运行FastQC确认</text>
+
+  <line class="line" x1="300" y1="335" x2="300" y2="365"/>
+  <line class="line" x1="300" y1="365" x2="600" y2="365"/>
+  <line class="line" x1="760" y1="335" x2="760" y2="365"/>
+  <line class="line" x1="600" y1="280" x2="600" y2="335"/>
+  <line class="line" x1="600" y1="335" x2="760" y2="335"/>
+  <line class="line" x1="600" y1="365" x2="600" y2="390" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: Reference Genome -->
+  <rect class="step" x="380" y="395" width="440" height="50"/>
+  <text x="600" y="415" text-anchor="middle" class="title">步骤2：参考基因组选择</text>
+  <text x="600" y="432" text-anchor="middle" class="small">GRCh38/hg38 · Ensembl/RefSeq注释GTF · 建立BWA/bowtie2索引</text>
+
+  <line class="line" x1="600" y1="445" x2="600" y2="470" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: Alignment -->
+  <rect class="align" x="380" y="475" width="440" height="65"/>
+  <text x="600" y="495" text-anchor="middle" class="title">步骤3：序列比对</text>
+  <text x="600" y="512" text-anchor="middle" class="label">BWA-MEM（WGS）/ STAR（RNA-seq）/ bowtie2（ATAC-seq）</text>
+  <text x="600" y="528" text-anchor="middle" class="small">输出：SAM → 排序 → BAM</text>
+
+  <line class="line" x1="600" y1="540" x2="600" y2="565" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: Mapped-read processing -->
+  <rect class="align" x="340" y="570" width="520" height="70"/>
+  <text x="600" y="590" text-anchor="middle" class="title">步骤4：比对后处理</text>
+  <text x="600" y="608" text-anchor="middle" class="label">samtools fixmate · sort · markdup | Picard MarkDuplicates</text>
+  <text x="600" y="624" text-anchor="middle" class="small">去除PCR重复 · BAM排序 · 建立索引 · 碱基质量校正（GATK BQSR）</text>
+
+  <line class="line" x1="600" y1="640" x2="600" y2="665" marker-end="url(#arrow)"/>
+
+  <!-- Per-assay branch -->
+  <rect class="process" x="380" y="670" width="440" height="40"/>
+  <text x="600" y="689" text-anchor="middle" class="title">步骤5：特定检测下游分析</text>
+  <text x="600" y="703" text-anchor="middle" class="small">根据检测类型选择不同的分析流程</text>
+
+  <line class="line" x1="600" y1="710" x2="600" y2="735" marker-end="url(#arrow)"/>
+
+  <!-- Branch into 4 assay types -->
+  <line class="line" x1="600" y1="735" x2="150" y2="755"/>
+  <line class="line" x1="600" y1="735" x2="390" y2="755"/>
+  <line class="line" x1="600" y1="735" x2="810" y2="755"/>
+  <line class="line" x1="600" y1="735" x2="1050" y2="755"/>
+
+  <rect class="downstream" x="40" y="755" width="220" height="55"/>
+  <text x="150" y="775" text-anchor="middle" class="title">WGS分析</text>
+  <text x="150" y="793" text-anchor="middle" class="small">GATK HaplotypeCaller</text>
+  <text x="150" y="805" text-anchor="middle" class="small">变异检测 → VCF</text>
+
+  <rect class="downstream" x="290" y="755" width="200" height="55"/>
+  <text x="390" y="775" text-anchor="middle" class="title">RNA-seq分析</text>
+  <text x="390" y="793" text-anchor="middle" class="small">featureCounts/HTSeq</text>
+  <text x="390" y="805" text-anchor="middle" class="small">差异表达 → 计数矩阵</text>
+
+  <rect class="downstream" x="710" y="755" width="200" height="55"/>
+  <text x="810" y="775" text-anchor="middle" class="title">ATAC-seq分析</text>
+  <text x="810" y="793" text-anchor="middle" class="small">MACS2峰值检测</text>
+  <text x="810" y="805" text-anchor="middle" class="small">染色质可及性 → BED/peak</text>
+
+  <rect class="downstream" x="940" y="755" width="220" height="55"/>
+  <text x="1050" y="775" text-anchor="middle" class="title">ChIP-seq分析</text>
+  <text x="1050" y="793" text-anchor="middle" class="small">MACS2/SEACR峰值检测</text>
+  <text x="1050" y="805" text-anchor="middle" class="small">组蛋白修饰→ BED/peak</text>
+
+  <!-- Merge back -->
+  <line class="line" x1="150" y1="810" x2="150" y2="840"/>
+  <line class="line" x1="390" y1="810" x2="390" y2="840"/>
+  <line class="line" x1="810" y1="810" x2="810" y2="840"/>
+  <line class="line" x1="1050" y1="810" x2="1050" y2="840"/>
+  <line class="line" x1="150" y1="840" x2="1050" y2="840"/>
+  <line class="line" x1="600" y1="840" x2="600" y2="865" marker-end="url(#arrow)"/>
+
+  <!-- Step 6: Annotation -->
+  <rect class="annot" x="350" y="870" width="500" height="50"/>
+  <text x="600" y="890" text-anchor="middle" class="title">步骤6-8：注释 · 可视化 · 解读</text>
+  <text x="600" y="906" text-anchor="middle" class="small">ANNOVAR/SnpEff注释 · IGV可视化 · 文献/数据库整合</text>
+
+  <line class="line" x1="600" y1="920" x2="600" y2="945" marker-end="url(#arrow)"/>
+
+  <!-- Final Output -->
+  <rect class="process" x="300" y="950" width="600" height="50"/>
+  <text x="600" y="972" text-anchor="middle" class="title">最终结果：可解释的基因组结果</text>
+  <text x="600" y="988" text-anchor="middle" class="small">科学发现 · 变异列表 · 差异表达基因 · 调控元件 · 生物学假说</text>
+
+  <!-- Legend -->
+  <rect x="30" y="870" width="250" height="100" fill="#f8f9fa" stroke="#ccc" rx="5"/>
+  <text x="45" y="888" font-size="11" font-weight="bold" fill="#333">图例</text>
+  <rect x="45" y="895" width="16" height="10" fill="#e8f4f8" stroke="#2980b9" stroke-width="1"/>
+  <text x="70" y="904" font-size="9" fill="#333">准备 / 参考基因组</text>
+  <rect x="45" y="910" width="16" height="10" fill="#fef9e7" stroke="#f39c12" stroke-width="1"/>
+  <text x="70" y="919" font-size="9" fill="#333">质控步骤</text>
+  <rect x="45" y="925" width="16" height="10" fill="#eafaf1" stroke="#27ae60" stroke-width="1"/>
+  <text x="70" y="934" font-size="9" fill="#333">比对 / 比对后处理</text>
+  <rect x="45" y="940" width="16" height="10" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1"/>
+  <text x="70" y="949" font-size="9" fill="#333">特定检测下游分析</text>
+  <rect x="45" y="955" width="16" height="10" fill="#e8f8f5" stroke="#1abc9c" stroke-width="1"/>
+  <text x="70" y="964" font-size="9" fill="#333">注释 / 可视化</text>
+</svg>
